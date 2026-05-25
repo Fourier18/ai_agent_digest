@@ -1,0 +1,21 @@
+# Daily-regenerated digest outputs
+digest.html
+digest_briefing.html
+digest_briefing.md
+episode_focus.txt
+digest_meta.json
+
+# Misnamed / divergent outputs the agent has produced in past runs
+# (kept here so future divergences also get ignored)
+email.html
+digest_email.html
+briefing.md
+digest_brief.md
+audio_script.txt
+social_posts.txt
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
