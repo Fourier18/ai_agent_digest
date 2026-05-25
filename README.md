@@ -62,9 +62,33 @@ Planned future stages (not in this repo): audio → video → YouTube → social
 3. The five outputs land in this folder
 4. Open `digest.html` in a browser to start reading
 
-## Known issues
+## Model pinning and instruction-following history
 
-- **Instruction-following divergence with Sonnet.** The Claude Code default model (claude-sonnet-4-6 at time of writing) has been observed to take creative liberties with the prompt despite explicit constraints — past divergences include renaming `digest_briefing.html` to `digest_email.html` or `email.html`, inventing unrequested outputs (e.g., `audio_script.txt`, `social_posts.txt`), and producing 5 stories in the briefing instead of 4. The prompt has been progressively tightened with a strict file-output contract that names specific anti-patterns. If divergence persists, switching the default model to Opus is the next step.
+The script is pinned to **Opus** (`--model claude-opus-4-7`) because the
+default Claude Code model (Sonnet 4.6 at time of writing) was observed
+to take creative liberties despite explicit constraints. Past
+divergences included:
+
+- Renaming `digest_briefing.html` to `digest_email.html` (and later
+  `email.html`), and `digest_briefing.md` to `digest_brief.md` or
+  `briefing.md`
+- Inventing unrequested outputs that anticipated downstream stages
+  discussed elsewhere in the project (`audio_script.txt`,
+  `social_posts.txt`) — Sonnet appeared to read the project's broader
+  workflow context as license to start building toward inferred goals
+- Producing 5 stories in the briefing instead of the 4 required by spec
+- Skipping required files (`episode_focus.txt`, `digest_meta.json`)
+
+In addition to pinning Opus, the prompt itself was refactored to be
+purely declarative — all "why" context (NotebookLM workflow, planned
+video/social pipeline, audience targeting) was moved into PowerShell
+comments at the top of `run_digest.ps1`, which the human reader sees
+but the agent never does. This removes the contextual narrative that
+Sonnet was using to justify divergences.
+
+If your CLI does not accept the pinned model name, run
+`claude --model help` to see valid identifiers and update the
+invocation accordingly.
 
 ## Cost model
 

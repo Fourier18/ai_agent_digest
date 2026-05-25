@@ -1,20 +1,55 @@
-# Daily AI Agent News Digest — runs via Claude Code (uses your Pro subscription, not API credits).
+# ============================================================
+# AI Agent News Digest — Daily Pipeline
+# ============================================================
+#
+# Runs via Claude Code on Anthropic Pro subscription (NOT API credits).
+#
+# WORKFLOW CONTEXT (for the human reading this — the prompt below is
+# kept strictly declarative and does NOT include any of this rationale.
+# Sonnet has been observed using contextual narrative as license to
+# "improve" the design — renaming files to fit the implied use case,
+# inventing extra outputs for downstream stages, ignoring story-count
+# constraints when the broader story suggested more would help.):
+#
+#   1. Run this script (or double-click run_digest.bat).
+#   2. Read digest.html over coffee for breadth.
+#   3. Upload digest_briefing.md + show_bible.md as sources to a fresh
+#      Google NotebookLM notebook.
+#   4. Click Audio Overview -> Customize. Set Length to Short. Paste
+#      contents of episode_focus.txt into the focus textbox.
+#   5. Generate audio overview (~6-8 min spoken briefing).
+#
+# FILE ROLES (outputs produced by this script):
+#   digest.html          Full reading digest, 8-10 stories, themed
+#   digest_briefing.html 4 most impactful stories, browser preview
+#   digest_briefing.md   Same 4 stories as Markdown for NotebookLM
+#   episode_focus.txt    Steering prompt for NotebookLM focus textbox
+#   digest_meta.json     Structured catalog for downstream tooling
+#
+# MODEL PINNING:
+#   The script pins to Opus because Sonnet has been observed taking
+#   creative liberties despite explicit constraints. If your CLI does
+#   not recognize the model name in the invocation below, run
+#   `claude --model help` (or `claude /model` inside an interactive
+#   session) to list valid identifiers and update accordingly.
 #
 # Usage:
-#   .\run_digest.ps1
+#   .\run_digest.ps1   (or double-click run_digest.bat)
 #
 # When it finishes, open digest.html in this folder.
+# ============================================================
 
-# Force subscription auth. If ANTHROPIC_API_KEY is set in your environment,
+# Force subscription auth. If ANTHROPIC_API_KEY is set in your env,
 # Claude Code uses that and bills per token — unset it for this process.
 $env:ANTHROPIC_API_KEY = $null
 
-# Always write digest.html into this script's folder, regardless of where it was launched.
+# Always write outputs into this script's folder, regardless of where
+# it was launched.
 Set-Location -Path $PSScriptRoot
 
-# Locate claude.exe. Anthropic's Claude Code desktop installer puts it under
-# %APPDATA%\Claude\claude-code\<version>\ but doesn't add it to PATH.
-# Pick the highest installed version automatically.
+# Locate claude.exe. Anthropic's Claude Code desktop installer puts it
+# under %APPDATA%\Claude\claude-code\<version>\ but doesn't add it to
+# PATH. Pick the highest installed version automatically.
 $claude = $null
 $claudeBase = Join-Path $env:APPDATA "Claude\claude-code"
 if (Test-Path $claudeBase) {
@@ -41,8 +76,8 @@ Write-Host "Using: $claude`n"
 $today = Get-Date -Format "yyyy-MM-dd"
 
 $prompt = @"
-You are a tool-using agent. Your job is to call tools to create a file.
-Your text response is irrelevant; only the file on disk matters.
+You are a tool-using agent. Your job is to call tools to create files.
+Your text response is irrelevant; only the files on disk matter.
 
 Today's date is $today.
 
@@ -50,144 +85,104 @@ Required tool calls, in order:
 
 1. WebSearch — call at least 5 times with DIFFERENT queries covering
    recent AI agent news (product launches, research papers,
-   benchmarks, criticism, regulation). Focus on stories from the
-   last 24-48 hours. After identifying candidate stories, search
-   again for the PRIMARY source of each (company blog, paper,
-   official announcement, major newswire) — aggregator roundups
-   alone are not enough.
+   benchmarks, criticism, regulation). Focus on stories from the last
+   24-48 hours. After identifying candidate stories, search again for
+   the PRIMARY source of each.
 
-2. WebFetch — call as needed to read full articles. Use it
-   especially to confirm a primary source actually says what an
-   aggregator claims, and to write substantive summaries.
+2. WebFetch — call as needed to read full articles for substantive
+   summaries and to verify primary-source claims when relying on
+   aggregators.
 
-Story selection rules (apply STRICTLY — drop stories that fail any):
-- The story must be primarily about AI agents: agent products,
-  agent capabilities, agent infrastructure, agent benchmarks,
-  agent regulation, or research that directly changes what agents
-  can do. Generic company news (IPO filings, earnings, executive
-  hires, fundraises) does NOT qualify on its own — only include
-  it if the story is explicitly about the company's agent
-  strategy or an agent product, and frame the summary around
-  that agent angle. When in doubt, drop it.
-- Each story must cite at least one PRIMARY source: the
-  publisher's own site or blog, the company's own announcement,
-  a paper on arxiv, a major newswire (Reuters/Bloomberg/AP/
-  Financial Times), or a reputable specialist outlet (TechCrunch,
-  The Information, Stratechery, The Verge, Ars Technica). Daily
-  AI-news roundup blogs do NOT count as a primary source; they
-  may appear as additional sources but never as the only source.
+Story selection rules (apply STRICTLY — drop any story that fails):
+- Story must be primarily about AI agents: agent products, agent
+  capabilities, agent infrastructure, agent benchmarks, agent
+  regulation, or research that directly changes what agents can do.
+  Generic company news (IPO filings, earnings, executive hires,
+  fundraises) does NOT qualify on its own — only include if it
+  explicitly signals an agent strategy shift, framed around that
+  angle.
+- Each story must cite at least one PRIMARY source: publisher's own
+  site or blog, the company's own announcement, a paper on arxiv, a
+  major newswire (Reuters/Bloomberg/AP/FT), or a reputable specialist
+  outlet (TechCrunch, The Information, Stratechery, The Verge, Ars
+  Technica). Daily AI-news roundup blogs do NOT count as primary.
 
-3. Write — call EXACTLY FIVE TIMES, in this exact order, with these
-   EXACT filenames. Filenames are NOT suggestions and NOT a starting
-   point for your own naming choices. DO NOT rename them. DO NOT
-   abbreviate them. DO NOT substitute synonyms (no "email" for
-   "briefing", no "brief" for "briefing", no "summary" for "briefing").
-   DO NOT create any additional files not listed here.
+3. Write — call EXACTLY FIVE TIMES, in this order, with these exact
+   filenames. Filenames are NOT suggestions. DO NOT rename. DO NOT
+   abbreviate. DO NOT substitute synonyms (no "email", no "brief", no
+   "summary", no "script", no "posts", no "transcript"). DO NOT
+   create files not on this list.
 
-   First Write call (full digest, for personal reading):
-     file_path: digest.html
-     content: <full self-contained HTML file per "Full digest
-     specification" below>
+   1. digest.html
+   2. digest_briefing.html
+   3. digest_briefing.md
+   4. episode_focus.txt
+   5. digest_meta.json
 
-   Second Write call (short briefing as HTML):
-     file_path: digest_briefing.html
-     content: <tight briefing HTML per "Briefing specification" below>
+4. After all five Write calls succeed, reply with exactly:
+   "Saved 5 files."
 
-   Third Write call (same briefing as Markdown, for NotebookLM upload):
-     file_path: digest_briefing.md
-     content: <markdown version of the briefing per "Briefing Markdown
-     specification" below>
+STRICT FILE OUTPUT CONTRACT:
+- Exactly 5 files written. Exactly the names above. Exact order.
+- digest.html contains 8-10 stories. digest_briefing.html,
+  digest_briefing.md, and the briefing_stories array in
+  digest_meta.json each contain EXACTLY 4 stories. Not 3. Not 5.
+  Four. Count before writing.
+- All five Write calls are MANDATORY.
+- ANY file written with a different name = task failure.
+- ANY extra file beyond the 5 above = task failure. This means: no
+  audio scripts, no social posts, no email versions, no transcripts,
+  no slide outlines, no follow-up files of any kind, regardless of
+  what you infer about how these files might be used downstream.
+- All content goes in Write content arguments — never in your text
+  reply.
 
-   Fourth Write call (today's customization-box prompt for NotebookLM):
-     file_path: episode_focus.txt
-     content: <plain-text focus prompt per "Episode focus
-     specification" below>
-
-   Fifth Write call (structured metadata for downstream tooling):
-     file_path: digest_meta.json
-     content: <JSON metadata per "JSON metadata specification" below>
-
-4. After ALL FIVE Write calls succeed, respond with one short line
-   such as:
-   "Saved digest.html (7 stories), digest_briefing.html,
-   digest_briefing.md (4 stories), episode_focus.txt, and
-   digest_meta.json."
-
-STRICT FILE OUTPUT CONTRACT — read before doing anything in step 3:
-- Exactly 5 files must be written, with the EXACT filenames listed
-  above. No more files, no fewer. No renames, no creative variants.
-- The briefing files (digest_briefing.html, digest_briefing.md, and
-  the briefing_stories array in digest_meta.json) MUST contain
-  EXACTLY 4 stories. Not 3. Not 5. Four. Before writing the briefing
-  files, count your selected stories. If the count is anything other
-  than 4, revise your selection until it is 4.
-- All five Write tool calls in step 3 are MANDATORY. If you do not
-  call all five, you have failed the task. If you write files not in
-  this list (no "_email", no "_brief", no "_summary" variants), you
-  have failed the task. If you write the same file twice with
-  different content, you have failed the task.
-- Do NOT include HTML, Markdown, or JSON in your text response. All
-  content belongs in the Write content arguments, nowhere else.
-
-Full digest specification:
-- HTML5 doctype, <html lang="en">
-- All CSS inline in a single <style> block. No external scripts, fonts,
-  stylesheets, or images.
-- max-width around 760px centered, line-height around 1.6, system font
-  stack, generous whitespace
-- Header: <h1>AI Agent News Digest</h1> and the date $today
-- 2-5 themed <section>s, each starting with <h2> of the theme name
+================================================================
+digest.html specification:
+- HTML5 doctype, <html lang="en">.
+- All CSS inline in a single <style> block. No external scripts,
+  fonts, stylesheets, or images.
+- max-width around 760px centered, line-height around 1.6, system
+  font stack, generous whitespace.
+- Header: <h1>AI Agent News Digest</h1> and the date $today.
+- 2-5 themed <section>s, each starting with <h2> of the theme name.
 - Each story: <h3>title</h3>, <p>3-5 sentence original summary</p>,
   "Sources:" followed by <ul><li><a href="..." target="_blank"
-  rel="noopener noreferrer">title</a></li>...</ul>
-- At most 10 stories total. At most 5 sources per story. Fewer is fine.
-- No JavaScript, no emoji, quiet professional tone
+  rel="noopener noreferrer">title</a></li>...</ul>.
+- 8-10 stories total. At most 5 sources per story.
+- No JavaScript, no emoji, quiet professional tone.
+- Summaries: 3-5 original sentences explaining what happened and
+  why it matters. Not headline rephrasing.
 
-Summaries in the full digest must be 3-5 original sentences explaining
-what happened and why it matters — not headline rephrasing. Quality over
-quantity: if only 4 stories are genuinely noteworthy, ship 4.
-
-Briefing specification:
-- This is a tight subset of the full digest, intended to be fed to a
-  podcast-style audio generator (NotebookLM) for a 6-8 minute spoken
-  briefing. Same research, sharper selection, SAME prose depth.
-- Pick the 4 MOST IMPACTFUL agentic stories from the full digest.
-  "Most impactful" = the stories that most directly change what agents
-  can do, how agents are built, or the competitive landscape for agent
+================================================================
+digest_briefing.html specification:
+- Pick the 4 MOST IMPACTFUL agentic stories from digest.html. "Most
+  impactful" = the stories that most directly change what agents can
+  do, how agents are built, or the competitive landscape for agent
   builders. Cut financial/business stories unless they explicitly
-  signal a strategic agent shift. When in doubt, cut.
-- Audio length is controlled by NUMBER of stories, not by per-story
-  brevity. The audio generator will discuss the source material, so
-  each story needs enough factual content for substantive discussion.
-  Do NOT shorten summaries. If anything, the briefing benefits from
-  richer per-story context than the full digest, because fewer stories
-  means the hosts can go deeper on each one.
-- Same HTML style block and overall structure as the full digest, but:
-    * Header: <h1>AI Agent Daily Briefing</h1> and the date $today
-    * NO theme <section>s — just a flat list of 4 stories ordered by
-      impact (most important first)
-    * Each story: <h3>title</h3>, <p>full summary of equal or greater
-      depth than the full digest's version — 4-6 information-dense
-      sentences covering what happened, the key technical/strategic
-      details, and why it matters for agent builders</p>, sources list
-      (same format as the full digest)
-- Same primary-source rule applies — every briefing story must cite at
-  least one primary source.
-- Goal: give the audio generator enough factual material that the two
-  hosts can discuss the actual data substantively, without needing to
-  invent filler.
+  signal a strategic agent shift.
+- Same HTML style block and overall structure as digest.html, but:
+    * Header: <h1>AI Agent Daily Briefing</h1> and the date $today.
+    * NO theme <section>s — flat list of 4 stories ordered by
+      impact (most important first).
+    * Each story: <h3>title</h3>, <p>4-6 information-dense sentences
+      covering what happened, key technical/strategic details, and
+      why it matters for agent builders</p>, sources list (same
+      format as digest.html).
+- EXACTLY 4 stories. Same primary-source rule applies.
 
-Briefing Markdown specification:
-- Plain Markdown, no HTML tags, no frontmatter, no code fences around
-  the document.
+================================================================
+digest_briefing.md specification:
+- Plain Markdown, no HTML tags, no frontmatter, no code fences
+  around the document.
 - Identical content to digest_briefing.html — same 4 stories, same
-  order, same paragraph depth, same primary-source list per story.
+  order, same paragraph depth, same source list per story.
 - Structure:
     # AI Agent Daily Briefing
     $today
 
     ## <story 1 title>
-    <4-6 sentence summary paragraph>
+    <4-6 sentence summary>
 
     Sources:
     - [<source title>](<url>)
@@ -195,48 +190,37 @@ Briefing Markdown specification:
 
     ## <story 2 title>
     ...
-- The Markdown file is the one uploaded to NotebookLM; it must read
-  cleanly as a standalone document with no styling required.
+- Must read cleanly as a standalone document with no styling.
 
-Episode focus specification:
-- Plain text only. NO Markdown formatting — no headings, no bullet
-  lists, no bold or italic. NO HTML. Just sentences.
-- This text is pasted directly into NotebookLM's "What should the AI
-  hosts focus on in this episode?" textbox. It is a high-priority
-  steering prompt for the audio generator. It is NOT part of the
-  source corpus.
-- 4-6 sentences total. Declarative phrasing throughout. Tailored
-  specifically to the four stories in TODAY's briefing.
-- The content MUST include all of the following:
-    * Which of the four stories should lead the episode, and a one-
-      clause reason ("lead with X because it is the structural piece
-      that the other three depend on").
-    * One specific point where the two hosts should disagree — drawn
-      from a real tension in today's source material, not manufactured
-      drama. Phrase it as a question the hosts hold different
-      positions on.
-    * One framing or pattern to avoid for this particular day's
-      content (e.g., "do not frame this as a Google vs. OpenAI
-      horse-race"; "do not treat the funding announcement as the lead").
-    * Optional but encouraged: one technical detail worth dwelling
-      on because it has architectural implications for agent builders.
-- A persistent show identity file (show_bible.md) defines the host
-  personalities and episode format. Do NOT redefine those here. The
-  episode focus layers on top of the show bible, it does not replace
-  it.
-- Information-dense. No hedging. No filler phrases. No closing
+================================================================
+episode_focus.txt specification:
+- Plain text only. NO Markdown formatting (no headings, no bullets,
+  no bold). NO HTML. Just sentences.
+- 4-6 declarative sentences tailored specifically to the 4 stories
+  in TODAY's briefing.
+- Required content (cover all four points):
+    * Which of the four briefing stories should lead, plus a
+      one-clause reason.
+    * One specific point of disagreement to surface — drawn from a
+      real tension in today's source material, not manufactured.
+      Phrase as a question with two defensible positions.
+    * One framing or pattern to avoid for this day's content
+      (e.g., "do not frame this as a Google vs. OpenAI horse-race";
+      "do not treat the funding announcement as the lead").
+    * One technical detail worth dwelling on because it has
+      architectural implications for agent builders.
+- Information-dense. Declarative. No hedging. No filler. No closing
   pleasantries.
 
-JSON metadata specification:
+================================================================
+digest_meta.json specification:
 - Valid JSON. No trailing commas. No JavaScript-style comments.
-- Captures structured metadata about the day's briefing for use by
-  downstream tooling (cataloging, analytics, future pipeline stages).
-- Required top-level structure (this exact shape, these exact keys):
+- Required top-level structure (these exact keys):
     {
       "digest": {
         "title": "AI Agent Daily Briefing",
         "date": "$today",
-        "generated_at": "<ISO 8601 timestamp at time of generation>",
+        "generated_at": "<ISO 8601 timestamp>",
         "full_story_count": <integer, total stories in digest.html>,
         "briefing_story_count": 4,
         "files": {
@@ -249,33 +233,30 @@ JSON metadata specification:
       },
       "briefing_stories": [ <exactly 4 story objects> ]
     }
-- Each entry in briefing_stories MUST have this exact shape:
+- Each entry in briefing_stories (exactly 4 entries):
     {
-      "id": <integer 1 through 4, in order of impact>,
-      "title": "<story title, matching digest_briefing.md>",
-      "event_date": "<YYYY-MM-DD of the underlying news event>",
-      "tags": ["<short topic tags, 2-5 entries>"],
+      "id": <integer 1-4, in order of impact>,
+      "title": "<matches digest_briefing.md story title>",
+      "event_date": "<YYYY-MM-DD of the underlying event>",
+      "tags": ["<2-5 short topic tags>"],
       "category": "<one of: product-launch, research-paper,
-        infrastructure, standards, regulation, business-with-agent-angle>",
+        infrastructure, standards, regulation,
+        business-with-agent-angle>",
       "one_line_summary": "<single declarative sentence, no markdown>",
       "primary_sources": [
         {
           "url": "<full URL>",
           "title": "<source title>",
           "is_primary": <true if a primary source per the rules
-                         above, false if aggregator/secondary>
+                          above, false if aggregator or secondary>
         }
       ]
     }
-- briefing_stories MUST contain exactly 4 entries — the same 4
-  stories as digest_briefing.md, in the same impact order, with
-  matching titles.
-- At least one entry in each story's primary_sources array MUST have
-  is_primary = true (this enforces the primary-source rule at the
-  data layer as well as in prose).
+- At least one source per story must have is_primary = true.
 "@
 
 & $claude -p $prompt `
+    --model claude-opus-4-7 `
     --allowedTools "WebSearch,WebFetch,Write,Read" `
     --permission-mode acceptEdits `
     --output-format text
