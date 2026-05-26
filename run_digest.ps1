@@ -21,8 +21,8 @@
 #
 # FILE ROLES (outputs produced by this script):
 #   digest.html          Full reading digest, 8-10 stories, themed
-#   digest_briefing.html 4 most impactful stories, browser preview
-#   digest_briefing.md   Same 4 stories as Markdown for NotebookLM
+#   digest_briefing.html 5 most impactful stories, browser preview
+#   digest_briefing.md   Same 5 stories as Markdown for NotebookLM
 #   episode_focus.txt    Steering prompt for NotebookLM focus textbox
 #   digest_meta.json     Structured catalog for downstream tooling
 #
@@ -126,8 +126,8 @@ STRICT FILE OUTPUT CONTRACT:
 - Exactly 5 files written. Exactly the names above. Exact order.
 - digest.html contains 8-10 stories. digest_briefing.html,
   digest_briefing.md, and the briefing_stories array in
-  digest_meta.json each contain EXACTLY 4 stories. Not 3. Not 5.
-  Four. Count before writing.
+  digest_meta.json each contain EXACTLY 5 stories. Not 4. Not 6.
+  Five. Count before writing.
 - All five Write calls are MANDATORY.
 - ANY file written with a different name = task failure.
 - ANY extra file beyond the 5 above = task failure. This means: no
@@ -156,26 +156,26 @@ digest.html specification:
 
 ================================================================
 digest_briefing.html specification:
-- Pick the 4 MOST IMPACTFUL agentic stories from digest.html. "Most
+- Pick the 5 MOST IMPACTFUL agentic stories from digest.html. "Most
   impactful" = the stories that most directly change what agents can
   do, how agents are built, or the competitive landscape for agent
   builders. Cut financial/business stories unless they explicitly
   signal a strategic agent shift.
 - Same HTML style block and overall structure as digest.html, but:
     * Header: <h1>AI Agent Daily Briefing</h1> and the date $today.
-    * NO theme <section>s — flat list of 4 stories ordered by
+    * NO theme <section>s — flat list of 5 stories ordered by
       impact (most important first).
     * Each story: <h3>title</h3>, <p>4-6 information-dense sentences
       covering what happened, key technical/strategic details, and
       why it matters for agent builders</p>, sources list (same
       format as digest.html).
-- EXACTLY 4 stories. Same primary-source rule applies.
+- EXACTLY 5 stories. Same primary-source rule applies.
 
 ================================================================
 digest_briefing.md specification:
 - Plain Markdown, no HTML tags, no frontmatter, no code fences
   around the document.
-- Identical content to digest_briefing.html — same 4 stories, same
+- Identical content to digest_briefing.html — same 5 stories, same
   order, same paragraph depth, same source list per story.
 - Structure:
     # AI Agent Daily Briefing
@@ -196,10 +196,10 @@ digest_briefing.md specification:
 episode_focus.txt specification:
 - Plain text only. NO Markdown formatting (no headings, no bullets,
   no bold). NO HTML. Just sentences.
-- 4-6 declarative sentences tailored specifically to the 4 stories
+- 4-6 declarative sentences tailored specifically to the 5 stories
   in TODAY's briefing.
 - Required content (cover all four points):
-    * Which of the four briefing stories should lead, plus a
+    * Which of the five briefing stories should lead, plus a
       one-clause reason.
     * One specific point of disagreement to surface — drawn from a
       real tension in today's source material, not manufactured.
@@ -222,7 +222,7 @@ digest_meta.json specification:
         "date": "$today",
         "generated_at": "<ISO 8601 timestamp>",
         "full_story_count": <integer, total stories in digest.html>,
-        "briefing_story_count": 4,
+        "briefing_story_count": 5,
         "files": {
           "full_digest_html": "digest.html",
           "briefing_html": "digest_briefing.html",
@@ -231,11 +231,11 @@ digest_meta.json specification:
           "metadata": "digest_meta.json"
         }
       },
-      "briefing_stories": [ <exactly 4 story objects> ]
+      "briefing_stories": [ <exactly 5 story objects> ]
     }
-- Each entry in briefing_stories (exactly 4 entries):
+- Each entry in briefing_stories (exactly 5 entries):
     {
-      "id": <integer 1-4, in order of impact>,
+      "id": <integer 1-5, in order of impact>,
       "title": "<matches digest_briefing.md story title>",
       "event_date": "<YYYY-MM-DD of the underlying event>",
       "tags": ["<2-5 short topic tags>"],

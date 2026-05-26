@@ -41,7 +41,7 @@ Planned future stages (not in this repo): audio → video → YouTube → social
 | File | Purpose |
 |---|---|
 | `digest.html` | Full reading digest, 8-10 stories grouped into 2-5 themes, self-contained HTML. |
-| `digest_briefing.html` | Browser-preview version of the briefing — 4 stories, flat list ordered by impact. |
+| `digest_briefing.html` | Browser-preview version of the briefing — 5 stories, flat list ordered by impact. |
 | `digest_briefing.md` | Same content as above in Markdown, for direct upload to NotebookLM. |
 | `episode_focus.txt` | Plain-text steering prompt for NotebookLM's "What should the AI hosts focus on" textbox. Tailored to that day's specific stories. |
 | `digest_meta.json` | Structured catalog of the briefing — story titles, tags, categories, primary-source URLs, `is_primary` flags. For downstream tooling. |
@@ -49,7 +49,7 @@ Planned future stages (not in this repo): audio → video → YouTube → social
 ## Quality controls baked into the prompt
 
 - Story must pass agent-relevance and primary-source gates
-- Briefing = exactly **4** most impactful stories (NOT 3, NOT 5)
+- Briefing = exactly **5** most impactful stories
 - Full digest summaries: 3-5 original sentences each
 - Briefing summaries: 4-6 information-dense sentences (preserved depth, NOT truncated — NotebookLM needs material to discuss substantively)
 - Primary-source rule enforced structurally via `is_primary` boolean in the JSON
