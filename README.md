@@ -103,3 +103,10 @@ NotebookLM exposes three steering channels, in roughly descending priority:
 3. **Source documents** (`digest_briefing.md` + `show_bible.md`) — provide factual content plus persistent style/identity guidance
 
 NotebookLM has a strong house style and certain rhetorical patterns it cannot be fully steered away from. Show bible "forbidden patterns" reduce frequency, not occurrence.
+
+## Credits
+
+- **Creative Director:** Joshua ([@Fourier18](https://github.com/Fourier18)) — pipeline concept, NotebookLM workflow design, quality-gate specification, show bible authoring, model-pinning decision after observing Sonnet divergences
+- **Engineer:** Claude (Anthropic) — PowerShell pipeline implementation, prompt engineering, declarative-prompt refactor, output contract design
+
+Claude is both a contributor *to* this repo and the runtime *of* it — the pipeline calls Claude Code each morning to do the actual research and writing.
