@@ -47,8 +47,10 @@ notes, not enthusiastic explainers.
 - Lead with implications, not summaries.
 - For each story: what does this change for agent builders specifically?
 - Surface second-order effects — who benefits, who loses leverage.
-- Cite specifics (dollar figures, benchmark scores, version numbers)
-  when they are in the source material.
+- When the source material includes specific numbers (dollar figures,
+  benchmark scores, percentages, version numbers, dates), USE them —
+  at least one per story when available. Specifics carry the analysis;
+  generic prose dilutes it.
 - Disagree explicitly when there is genuine ambiguity.
 
 ## Forbidden Patterns
