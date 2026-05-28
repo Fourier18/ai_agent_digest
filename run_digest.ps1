@@ -13,18 +13,31 @@
 #
 #   1. Run this script (or double-click run_digest.bat).
 #   2. Read digest.html over coffee for breadth.
-#   3. Upload digest_briefing.md + show_bible.md as sources to a fresh
-#      Google NotebookLM notebook.
+#   3. Upload ONLY digest_briefing.md as a source to a fresh Google
+#      NotebookLM notebook. Do NOT upload show_bible.md — NotebookLM
+#      treats anything in the source panel as content to discuss, and
+#      will make the audio be ABOUT the show bible instead of using
+#      it as guidance. The show identity now lives in the textbox.
 #   4. Click Audio Overview -> Customize. Set Length to Short. Paste
-#      contents of episode_focus.txt into the focus textbox.
+#      the entire contents of episode_focus.txt into the focus
+#      textbox (the script auto-merges show_bible.md into
+#      episode_focus.txt for this purpose).
 #   5. Generate audio overview (~6-8 min spoken briefing).
 #
 # FILE ROLES (outputs produced by this script):
 #   digest.html          Full reading digest, 8-10 stories, themed
 #   digest_briefing.html 5 most impactful stories, browser preview
-#   digest_briefing.md   Same 5 stories as Markdown for NotebookLM
-#   episode_focus.txt    Steering prompt for NotebookLM focus textbox
+#   digest_briefing.md   Same 5 stories as Markdown — THE ONLY source
+#                        you upload to NotebookLM
+#   episode_focus.txt    Combined steering prompt (show bible + day's
+#                        focus, merged by the script) — paste whole
+#                        into NotebookLM's customization textbox
 #   digest_meta.json     Structured catalog for downstream tooling
+#
+# STATIC INPUT (not regenerated, edit by hand):
+#   show_bible.md        Persistent show identity. The script auto-
+#                        merges this into episode_focus.txt. Do NOT
+#                        upload it to NotebookLM as a source.
 #
 # MODEL PINNING:
 #   The script pins to Opus because Sonnet has been observed taking
@@ -260,3 +273,30 @@ digest_meta.json specification:
     --allowedTools "WebSearch,WebFetch,Write,Read" `
     --permission-mode acceptEdits `
     --output-format text
+
+# ============================================================
+# Post-process: merge show_bible.md into episode_focus.txt.
+#
+# Why: NotebookLM treats anything uploaded as a source as content to
+# discuss, including style guides. Uploading show_bible.md as a source
+# made the audio be ABOUT the show bible. The customization textbox
+# is a higher-priority instruction channel that is NOT treated as
+# corpus, so the show identity belongs there.
+#
+# The agent writes only the day's focus to episode_focus.txt. This
+# block prepends show_bible.md content so the final file can be
+# pasted whole into NotebookLM's textbox.
+# ============================================================
+$showBiblePath = Join-Path $PSScriptRoot "show_bible.md"
+$episodeFocusPath = Join-Path $PSScriptRoot "episode_focus.txt"
+
+if ((Test-Path $showBiblePath) -and (Test-Path $episodeFocusPath)) {
+    $showBible = (Get-Content -Path $showBiblePath -Raw).TrimEnd()
+    $dailyFocus = (Get-Content -Path $episodeFocusPath -Raw).TrimEnd()
+    $separator = "`n`n---`n`nTODAY'S EPISODE FOCUS`n`n"
+    $combined = $showBible + $separator + $dailyFocus + "`n"
+    Set-Content -Path $episodeFocusPath -Value $combined -Encoding UTF8
+    Write-Host "`nMerged show_bible.md into episode_focus.txt (paste this whole file into NotebookLM's textbox)."
+} else {
+    Write-Host "`nNOTE: show_bible.md or episode_focus.txt missing — skipped merge."
+}

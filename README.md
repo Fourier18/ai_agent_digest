@@ -17,9 +17,9 @@ Each morning, double-clicking `run_digest.bat` invokes Claude Code to:
 ## Use case — daily morning workflow
 
 1. Read `digest.html` over coffee for breadth (8-10 stories across themes)
-2. Upload `digest_briefing.md` + `show_bible.md` as sources in a fresh NotebookLM notebook
+2. Upload **only** `digest_briefing.md` as a source in a fresh NotebookLM notebook. Do **not** upload `show_bible.md` — NotebookLM treats anything in the source panel as content to discuss, so uploading the show bible there makes the audio be *about* the show bible. The show identity belongs in the textbox.
 3. Click Audio Overview → Customize
-4. Set Length to **Short**, paste contents of `episode_focus.txt` into the focus textbox
+4. Set Length to **Short**, paste the entire contents of `episode_focus.txt` into the focus textbox. The script auto-merges `show_bible.md` into `episode_focus.txt`, so pasting that one file covers both persistent show identity and the day's focus.
 5. Generate — expect a ~6-8 minute spoken briefing
 
 Planned future stages (not in this repo): audio → video → YouTube → social fan-out.
@@ -32,7 +32,7 @@ Planned future stages (not in this repo): audio → video → YouTube → social
 |---|---|
 | `run_digest.bat` | Windows double-click launcher |
 | `run_digest.ps1` | Main pipeline. Locates `claude.exe`, unsets `ANTHROPIC_API_KEY` (forces subscription auth), invokes Claude Code with the prompt below. |
-| `show_bible.md` | Persistent show identity for NotebookLM — host personalities, episode structure, tone targets, forbidden patterns. Edit by hand when identity needs to evolve. Re-uploaded with each new notebook. |
+| `show_bible.md` | Persistent show identity — host personalities, episode structure, tone targets, forbidden patterns. The script auto-merges this into `episode_focus.txt` after each run. Edit by hand when the show identity needs to evolve. Never uploaded to NotebookLM as a source. |
 | `README.md` | This file. |
 | `.gitignore` | Excludes regenerated outputs. |
 
@@ -43,7 +43,7 @@ Planned future stages (not in this repo): audio → video → YouTube → social
 | `digest.html` | Full reading digest, 8-10 stories grouped into 2-5 themes, self-contained HTML. |
 | `digest_briefing.html` | Browser-preview version of the briefing — 5 stories, flat list ordered by impact. |
 | `digest_briefing.md` | Same content as above in Markdown, for direct upload to NotebookLM. |
-| `episode_focus.txt` | Plain-text steering prompt for NotebookLM's "What should the AI hosts focus on" textbox. Tailored to that day's specific stories. |
+| `episode_focus.txt` | Plain-text steering prompt for NotebookLM's "What should the AI hosts focus on" textbox. After the agent writes the day's focus, the script auto-prepends `show_bible.md` so the whole file can be pasted in one shot. |
 | `digest_meta.json` | Structured catalog of the briefing — story titles, tags, categories, primary-source URLs, `is_primary` flags. For downstream tooling. |
 
 ## Quality controls baked into the prompt
@@ -100,7 +100,7 @@ NotebookLM exposes three steering channels, in roughly descending priority:
 
 1. **The "What should the AI hosts focus on" textbox** (`episode_focus.txt` feeds this) — highest-priority, injected directly into the orchestration prompt
 2. **The Length control** (Short / Default / Long) — Short targets ~5-10 min on briefing-sized material
-3. **Source documents** (`digest_briefing.md` + `show_bible.md`) — provide factual content plus persistent style/identity guidance
+3. **Source document** (`digest_briefing.md` only) — the news content NotebookLM will discuss. The show bible deliberately stays out of the source panel; NotebookLM treats sources as content to summarize, so a style guide there gets *discussed* rather than *followed*. Show identity goes through the textbox channel instead.
 
 NotebookLM has a strong house style and certain rhetorical patterns it cannot be fully steered away from. Show bible "forbidden patterns" reduce frequency, not occurrence.
 
