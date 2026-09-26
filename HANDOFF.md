@@ -83,7 +83,8 @@ Joshua has asked for plain language; keep it that way.
 
 | Thing | ID / URL |
 |---|---|
-| Routine "AI agent digest" | `trig_01FDTur3UX4Rkq5azho2FEkY` |
+| Routine "AI agent digest" (current) | `trig_013itVEakhx4EF8bU4pRhBzp` |
+| Previous routine, same runner, old branch prompt | `trig_01FDTur3UX4Rkq5azho2FEkY` (deleted) |
 | Runner session (where every run executes) | `session_01Vsf8ttCT9sMXhRQvf68kG8` — https://claude.ai/code/session_01Vsf8ttCT9sMXhRQvf68kG8 |
 | This (handoff) session | `session_01Y2CFUDUDY38pK5n4jnv1Ek` |
 | Failed test run 1 session | `session_019bsaXSJC3dTMiwJgh6xChv` |
@@ -96,7 +97,7 @@ Joshua has asked for plain language; keep it that way.
 
 ```
 cron (every 3 days, 06:46 ET)
-  └─ routine trig_01FDTur3UX4Rkq5azho2FEkY
+  └─ routine trig_013itVEakhx4EF8bU4pRhBzp
        └─ sends a prompt into the persistent runner session
             (repo checked out, push allowed to `digests`, model Opus 5.5)
             1. git fetch + hard reset to origin/main
@@ -218,10 +219,17 @@ Sonnet comparison.
 Every run appends to one conversation (~112k tokens after run 1; limit
 1M). Expect ~8-10 runs before older context is summarized. The routine
 prompt tells the agent to treat each run as fresh and not reuse earlier
-stories, and to hard-reset to the working branch first. If runs start
+stories, and to hard-reset to `origin/main` first. If runs start
 drifting or repeating stories, create a new runner session and repoint
 the routine (delete + recreate the trigger; `update_trigger` cannot
 change `persistent_session_id`).
+
+**A routine's prompt can only be edited from the conversation it posts
+into** (here: the runner session). From any other session,
+`update_trigger` refuses prompt changes; name, schedule, pause/resume
+and delete still work. To change the prompt from elsewhere, delete and
+recreate the routine — which is what happened when repointing to
+`main` (new ID `trig_013itVEakhx4EF8bU4pRhBzp`).
 
 ### 6.5 Network policy limits research
 The runner reported WebFetch blocked by the environment proxy; it
