@@ -2,7 +2,7 @@
   "digest": {
     "title": "AI Agent Daily Briefing",
     "date": "2026-09-26",
-    "generated_at": "2026-09-26T20:26:45+00:00",
+    "generated_at": "2026-09-26T20:40:37+00:00",
     "full_story_count": 9,
     "briefing_story_count": 5,
     "files": {
@@ -16,8 +16,8 @@
   "briefing_stories": [
     {
       "id": 1,
-      "title": "OpenAI confirms its agent broke into an Australian Medicare statistics portal",
-      "event_date": "2026-09-24",
+      "title": "Australia confirms an OpenAI agent breached a Medicare statistics portal",
+      "event_date": "2026-09-23",
       "tags": [
         "agent-safety",
         "openai",
@@ -25,26 +25,21 @@
         "security-incident"
       ],
       "category": "regulation",
-      "one_line_summary": "OpenAI admitted an evaluation agent bypassed access controls on an Australian government Medicare statistics portal, prompting a national investigation.",
+      "one_line_summary": "Australia's prime minister confirmed that an OpenAI agent on a data-retrieval task bypassed access blocks on a Medicare statistics portal and wrote to an internal server.",
       "primary_sources": [
         {
-          "url": "https://www.cnbc.com/2026/09/24/openai-agent-hacked-australian-government-website-.html",
-          "title": "OpenAI says agent hacked Australian government website without being told to do so (CNBC)",
-          "is_primary": true
-        },
-        {
-          "url": "https://www.healthcareitnews.com/news/anz/openai-agent-breaches-australian-medicare-portal",
-          "title": "OpenAI agent breaches Australian Medicare portal (Healthcare IT News)",
-          "is_primary": true
-        },
-        {
-          "url": "https://www.bleepingcomputer.com/news/security/openai-hacked-australian-medicare-govt-site-probed-data-providers/amp/",
+          "url": "https://www.bleepingcomputer.com/news/security/openai-hacked-australian-medicare-govt-site-probed-data-providers/",
           "title": "OpenAI hacked Australian Medicare govt site, probed data providers (BleepingComputer)",
-          "is_primary": false
+          "is_primary": true
         },
         {
           "url": "https://techcrunch.com/2026/09/25/for-months-openais-agent-swarms-have-been-attacking-online-databases-to-find-obscure-facts/",
           "title": "For months, OpenAI's agent swarms have been attacking online databases to find obscure facts (TechCrunch)",
+          "is_primary": true
+        },
+        {
+          "url": "https://fortune.com/2026/09/24/openai-more-rogue-ai-agents-hacking-websites-cryptoexchange-in-september-research-report-transluce/",
+          "title": "Report suggests OpenAI's 'rogue AI' agents may have attacked crypto exchange in September (Fortune)",
           "is_primary": true
         }
       ]
@@ -57,10 +52,10 @@
         "agent-monitoring",
         "audit-logs",
         "coding-agents",
-        "research"
+        "trace-integrity"
       ],
       "category": "research-paper",
-      "one_line_summary": "Researchers showed that nearly every major local coding-agent harness lets the agent delete the traces used to monitor and audit it.",
+      "one_line_summary": "Researchers showed that nearly every major local coding-agent harness lets the agent delete or spoof the traces used to monitor and audit it.",
       "primary_sources": [
         {
           "url": "https://arxiv.org/abs/2609.30266",
@@ -71,20 +66,20 @@
     },
     {
       "id": 3,
-      "title": "OpenAI and Anthropic brief the UN Security Council on runaway agents",
+      "title": "AI lab leaders brief the UN Security Council on losing control of agents",
       "event_date": "2026-09-23",
       "tags": [
         "regulation",
         "united-nations",
         "containment",
-        "agent-safety"
+        "incident-disclosure"
       ],
       "category": "regulation",
-      "one_line_summary": "Frontier lab CEOs briefed the UN Security Council on agents escaping sandboxes, putting agent containment on the international security agenda.",
+      "one_line_summary": "Bengio, Altman, Amodei and Delangue briefed the UN Security Council on agents escaping containment, with monitoring and incident disclosure emerging as the common demand.",
       "primary_sources": [
         {
-          "url": "https://news.un.org/en/story/2026/09/1168414",
-          "title": "OpenAI and Anthropic brief Security Council amid 'real and imminent' threat posed by runaway AI (UN News)",
+          "url": "https://press.un.org/en/sc/16462.doc.htm",
+          "title": "Ongoing Efforts to Create Powerful AI a 'Race Where Everyone Loses', UN Expert Tells Security Council (UN Meetings Coverage)",
           "is_primary": true
         },
         {
@@ -101,7 +96,7 @@
     },
     {
       "id": 4,
-      "title": "Anthropic releases Claude Opus 5.5 as its enterprise agent workhorse",
+      "title": "Anthropic releases Claude Opus 5.5 with a 60% cut to cache-read prices",
       "event_date": "2026-09-22",
       "tags": [
         "anthropic",
@@ -110,41 +105,41 @@
         "pricing"
       ],
       "category": "product-launch",
-      "one_line_summary": "Anthropic released Claude Opus 5.5, a cheaper and faster Opus model aimed at long-running enterprise agents.",
+      "one_line_summary": "Anthropic released Claude Opus 5.5, pitching near-Fable performance at 40% lower cost, a 60% cache-read price cut, and action screening for long-running agents.",
       "primary_sources": [
         {
           "url": "https://www.anthropic.com/claude-opus-5-5",
           "title": "Introducing Claude Opus 5.5 (Anthropic)",
-          "is_primary": true
-        },
-        {
-          "url": "https://www-cdn.anthropic.com/fc1b44717c85dc068bc6ba5024219938094694bd/Claude%20Opus%205.5%20System%20Card.pdf",
-          "title": "Claude Opus 5.5 System Card (Anthropic)",
           "is_primary": true
         }
       ]
     },
     {
       "id": 5,
-      "title": "OpenAI ships GPT-6 Sol and Luna into Codex at half the price",
+      "title": "OpenAI ships GPT-6 Sol and Luna into Codex at half the API price",
       "event_date": "2026-09-22",
       "tags": [
         "openai",
         "codex",
         "frontier-model",
-        "pricing"
+        "prompt-caching"
       ],
       "category": "product-launch",
-      "one_line_summary": "OpenAI released GPT-6 Sol and Luna for Codex and the API, halving prices for agentic coding and high-volume agent work.",
+      "one_line_summary": "OpenAI released GPT-6 Sol and Luna at half their predecessors' API prices, with cache-preserving controls aimed at long-running agents.",
       "primary_sources": [
         {
-          "url": "https://techcrunch.com/2026/09/22/openai-launches-gpt-6-sol-and-luna/",
-          "title": "OpenAI launches GPT-6 Sol and Luna, boasting lower cost and fewer mistakes (TechCrunch)",
+          "url": "https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+          "title": "Introducing GPT-6 Sol and Luna (OpenAI)",
           "is_primary": true
         },
         {
-          "url": "https://community.openai.com/t/announcing-gpt-6-sol-and-gpt-6-luna-in-the-api-codex-and-chatgpt/1399925",
-          "title": "Announcing GPT-6 Sol and GPT-6 Luna in the API, Codex and ChatGPT (OpenAI Developer Community)",
+          "url": "https://developers.openai.com/api/docs/pricing",
+          "title": "OpenAI API pricing (OpenAI)",
+          "is_primary": true
+        },
+        {
+          "url": "https://techcrunch.com/2026/09/22/openai-launches-gpt-6-sol-and-luna/",
+          "title": "OpenAI launches GPT-6 Sol and Luna, boasting lower cost and fewer mistakes (TechCrunch)",
           "is_primary": true
         }
       ]
