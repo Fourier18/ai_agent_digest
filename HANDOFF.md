@@ -14,14 +14,15 @@ desktop app (local Claude Code and Cowork). Anything "we discussed
 before" is most likely in those local records; search them from a
 **local** session.
 
-**Unresolved:** Joshua recalls abandoning this project in May/June 2026
-after concluding the routine would cost ~$5/day. No written record was
-found in any GitHub repo (all 13, all branches). This session's own
-runner metrics roughly corroborate the figure: one digest ≈ $1.58
-usage-equivalent, plus a fact-check pass ≈ $3.02, ≈ $4.60 per verified
-run (reported `cost_usd`; on the subscription this is usage against
-limits, not a charge). The original discussion is likely in a local
-desktop-app transcript.
+**The cost discussion (found):** local Claude Code transcript,
+`ai-agent-digest` project, 2026-09-16 ~10:39–10:55 UTC. Estimate given
+then: one run ≈ 200K–500K tokens at Opus list pricing ≈ $1.50–$4.50;
+with a verification pass ≈ **$2–6/day, $60–180/month — only if the
+digest ran on API billing.** On the Pro subscription it adds no
+marginal cost. Joshua's reaction: ~$5/day for this task is absurd. This
+session's runner metrics agree (≈ $1.58 per digest, ≈ $4.60 with a
+fact-check pass, reported `cost_usd`). The current routine runs on the
+subscription, so the $2–6/day figure does not apply to it.
 
 ---
 
