@@ -10,16 +10,14 @@ https://claude.ai/code/session_01Y2CFUDUDY38pK5n4jnv1Ek.
 ## 1. How to resume
 
 - **Repository:** `Fourier18/ai_agent_digest` (GitHub).
-- **Working branch:** `claude/awesome-hamilton-uut6nm`. Everything from
-  this session — pipeline files, this handoff, `CLAUDE.md` — lives
-  here. Unless it has since been merged, `main` does NOT have these
-  files; a new thread must be opened on this branch (or `main` must be
-  updated first) to see them.
+- **Main branch:** `main`. All work from this session was merged into
+  `main` at the end of the session (fast-forward from
+  `claude/awesome-hamilton-uut6nm`). New threads open on `main` and see
+  everything. The routine pulls its task files from `main`.
 - **Output branch:** `digests`. The routine pushes each run's files to
   `output/YYYY-MM-DD/` there. It only ever receives output.
-- **Local clone (Joshua's Windows machine):** `git fetch` then
-  `git checkout claude/awesome-hamilton-uut6nm` to get these files
-  locally. The original double-click `.bat`/`.ps1` path still works
+- **Local clone (Joshua's Windows machine):** `git pull` on `main` to
+  get these files locally. The original double-click `.bat`/`.ps1` path still works
   unchanged.
 - **Check the latest run:**
   `git fetch origin digests && git checkout origin/digests -- output/`
@@ -67,8 +65,7 @@ Joshua has asked for plain language; keep it that way.
 
 ### Working and verified
 
-- Cloud pipeline files committed on `claude/awesome-hamilton-uut6nm`
-  (commit `55917c0`), plus this handoff and `CLAUDE.md`.
+- Cloud pipeline files, this handoff and `CLAUDE.md` are on `main`.
 - Routine **"AI agent digest"** is live and enabled.
 - Second test run **succeeded end to end**: researched, wrote five
   files, passed `validate.py` (checked independently afterwards),
@@ -102,7 +99,7 @@ cron (every 3 days, 06:46 ET)
   └─ routine trig_01FDTur3UX4Rkq5azho2FEkY
        └─ sends a prompt into the persistent runner session
             (repo checked out, push allowed to `digests`, model Opus 5.5)
-            1. git fetch + reset to claude/awesome-hamilton-uut6nm
+            1. git fetch + hard reset to origin/main
             2. read digest_task.md and follow it:
                  Step 0  DATE from `TZ=America/New_York date +%F`; mkdir output/DATE
                  Step 1  WebSearch ≥5 queries (+ WebFetch), apply relevance + primary-source gates
@@ -307,10 +304,10 @@ likely used another address or a phone number. Still unresolved.
    `output/2026-09-28/`, read the runner transcript, and note: did it
    read README or the scripts? how many validate→fix loops? did WebFetch
    work? any repeated stories from 09-26?
-2. **Get `main` in line.** New threads default to `main`, which lacks
-   all of this. Merge `claude/awesome-hamilton-uut6nm` into `main`
-   (needs Joshua's explicit go-ahead), then repoint the routine prompt
-   and runner `source_revision` from the working branch to `main`.
+2. ~~Get `main` in line.~~ Done: merged to `main`, routine prompt now
+   resets to `origin/main` each run. The runner session's recorded
+   `source_revision` still says `claude/awesome-hamilton-uut6nm`; harmless,
+   since the prompt resets to `main`. A recreated runner should use `main`.
 3. **Email delivery via claudeclerkone.** In a fresh session: confirm the
    connected Gmail account is claudeclerkone (search any mail; results
    show the address). Then create a new runner session that includes
