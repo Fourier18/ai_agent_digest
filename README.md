@@ -62,6 +62,28 @@ Planned future stages (not in this repo): audio → video → YouTube → social
 3. The five outputs land in this folder
 4. Open `digest.html` in a browser to start reading
 
+## Cloud routine (every 3 days)
+
+The pipeline also runs as a Claude Code on the web **routine**, on the
+subscription, with no machine of yours switched on. The pieces:
+
+| File | Role |
+|---|---|
+| `digest_task.md` | The agent's instructions — the same contract as the prompt in `run_digest.ps1`, plus validate and publish steps. The routine's prompt just points here. |
+| `validate.py` | Deterministic check of the output contract: exact filenames, no extra files, story counts, matching titles across files, JSON shape, `is_primary`. The agent must rerun it until it prints `PASS`. |
+| `merge_show_bible.py` | The show-bible merge from `run_digest.ps1`, as a script. Safe to run twice. |
+
+Each run writes to `output/YYYY-MM-DD/` and pushes that folder to the
+`digests` branch. Pull that branch (or browse it on GitHub) to get the
+files for NotebookLM.
+
+In the cloud the agent can read the whole repo, including this README's
+"why" — the context that led Sonnet to improvise. `digest_task.md`
+therefore tells the agent not to read README.md or the PowerShell
+scripts. Watch whether it complies.
+
+Check a run's output yourself with `python3 validate.py output/YYYY-MM-DD`.
+
 ## Model pinning and instruction-following history
 
 The script is pinned to **Opus** (`--model claude-opus-4-7`) because the
