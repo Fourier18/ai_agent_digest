@@ -1,5 +1,12 @@
 # AI Agent News Digest
 
+> **STATUS: SHUT DOWN (2026-09-26).** This project is closed. The
+> scheduled routine has been deleted and its runner session archived;
+> nothing runs automatically. The repository is kept as a reference —
+> the pipeline, validator, handoff notes and one sample digest
+> (`digests` branch, `output/2026-09-26/`) are here for future use.
+> See `HANDOFF.md` for the full record.
+
 A daily research pipeline that produces a curated digest of AI agent news, optimized for both personal reading and feeding into Google NotebookLM for audio-overview generation.
 
 Runs on the Anthropic **Pro subscription** via the Claude Code CLI — no per-token API costs.

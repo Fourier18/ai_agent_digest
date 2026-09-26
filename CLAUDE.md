@@ -1,10 +1,8 @@
 # CLAUDE.md
 
-**If you are running the scheduled digest (you were told to follow
-`digest_task.md`): ignore this file and do not open `HANDOFF.md`.
-Follow `digest_task.md` only.**
+**This project was shut down on 2026-09-26.** No routine runs. The repo
+is kept as a reference.
 
-Everyone else: read `HANDOFF.md` in full before doing anything. It holds
-the project's current state, the live routine and session IDs, open
-items, and everything learned so far. Update it at the end of any
-session that changes the project.
+Read `HANDOFF.md` (start with section 0) before doing anything here. It
+holds the full record: what was built, what was learned, the cost
+discussion, and how to revive the pipeline if ever wanted.

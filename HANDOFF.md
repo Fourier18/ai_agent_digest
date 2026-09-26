@@ -26,6 +26,31 @@ subscription, so the $2–6/day figure does not apply to it.
 
 ---
 
+## 0. STATUS: PROJECT SHUT DOWN (2026-09-26)
+
+Joshua shut the project down at the end of this session.
+
+- Routine "AI agent digest" (`trig_013itVEakhx4EF8bU4pRhBzp`) **deleted**.
+  No digest routine remains. (Two unrelated routines on the account,
+  "Explorer One" and "A2A Radar daily", were already disabled and were
+  not touched.)
+- Runner session `session_01Vsf8ttCT9sMXhRQvf68kG8` **archived**.
+- Repository **kept** as a reference. Nothing was deleted: `main` holds
+  the pipeline, validator, merge script and this handoff; `digests`
+  holds the one sample output (`output/2026-09-26/`, fact-checked
+  revision `45d4288`).
+- Deciding factor on record: the 2026-09-16 cost discussion (~$2–6/day
+  on API billing), plus Joshua's conclusion that the project wasn't
+  worth continuing. The 2026-05 → 2026-09 dormancy was never formally
+  marked; this section is that marker.
+
+To revive: re-create a runner session (`create_session` with the repo
+as source, `outcome_branch: digests`) and a routine pointing at it, as
+described in section 6.2. Everything below is the historical record as
+of shutdown; IDs listed as live are now deleted or archived.
+
+---
+
 ## 1. How to resume
 
 - **Repository:** `Fourier18/ai_agent_digest` (GitHub).
