@@ -5,6 +5,24 @@ project stands, how it got here, and everything learned along the way.
 Written at the close of the Claude Code on the web session
 https://claude.ai/code/session_01Y2CFUDUDY38pK5n4jnv1Ek.
 
+**Where this was written:** a *cloud* session (environment Web Dev 001),
+launched from the desktop app. It could reach GitHub and connected
+tools, but not Joshua's Windows machine — so it could not see his local
+Claude Code transcripts (`%USERPROFILE%\.claude\projects\`), Cowork
+history, or claude.ai chats. Joshua does ~99.9% of his work in the
+desktop app (local Claude Code and Cowork). Anything "we discussed
+before" is most likely in those local records; search them from a
+**local** session.
+
+**Unresolved:** Joshua recalls abandoning this project in May/June 2026
+after concluding the routine would cost ~$5/day. No written record was
+found in any GitHub repo (all 13, all branches). This session's own
+runner metrics roughly corroborate the figure: one digest ≈ $1.58
+usage-equivalent, plus a fact-check pass ≈ $3.02, ≈ $4.60 per verified
+run (reported `cost_usd`; on the subscription this is usage against
+limits, not a charge). The original discussion is likely in a local
+desktop-app transcript.
+
 ---
 
 ## 1. How to resume
