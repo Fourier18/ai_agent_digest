@@ -238,6 +238,15 @@ the ability to verify primary sources. Options: widen the environment's
 network policy in claude.ai environment settings, or accept search-only
 research and say so in the task.
 
+**Update, end of session:** the runner's environment is **Web Dev 001**
+(`env_01EycTfQagdueSaVcRgvNVoQ`, Anthropic cloud). Joshua switched its
+network setting to **full internet access**. The next run (2026-09-28)
+will show whether WebFetch now works. Joshua's other cloud environments:
+ExplorerOne (`env_0172SiULqFX8T9rkiq371jNk`, created 2026-08-21) and
+Default (`env_01HMt39p2YSfsq5VsKrHzm6p`, "trusted network access").
+Why ExplorerOne and Web Dev 001 exist separately is not recorded. None
+of these run on Joshua's machine.
+
 ### 6.6 `.gitignore` patterns without a leading slash match everywhere
 `digest.html` in `.gitignore` ignored it in every folder, which would
 have silently blocked committing `output/DATE/`. Anchored to root.
