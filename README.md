@@ -9,15 +9,17 @@
 
 A daily research pipeline that produces a curated digest of AI agent news, optimized for both personal reading and manual use in Google NotebookLM for audio-overview generation.
 
-**NotebookLM integration is manual by design, not just by omission.** Consumer
-NotebookLM has no public API for uploading sources or triggering generation —
-only a separate, deprecated Podcast API and a Gemini Notebook *Enterprise*
-preview API exist, neither of which this project uses. Scripting around that
-gap (browser automation against the consumer product) would mean automated
-access Google's terms don't extend to a logged-in human using the UI by hand.
-So every NotebookLM step here — upload, customize, generate — is a person
-clicking, every time. Checked against Google's terms 2026-10-14; see `HANDOFF.md`
-for how this was reconstructed after the original design discussion was lost.
+**NotebookLM integration is manual by design, checked against Google's actual
+terms (2026-09-15).** Google's Generative AI Additional Terms have no clause
+against automation or scripts. The main Terms of Service, under "Don't abuse
+our services," restrict automated access that defies machine-readable
+instructions like robots.txt — narrower than a blanket ban, but NotebookLM
+has no public API, so automating it would mean driving the consumer web UI
+with a bot, which is where that clause starts to apply. This pipeline never
+does that: every NotebookLM step — upload, customize, generate — is a person
+clicking, every time, so it's compliant by construction rather than by a
+specific prohibition it's dodging. Sources: [Generative AI Additional Terms](https://policies.google.com/terms/generative-ai),
+[Google Terms of Service](https://policies.google.com/terms), [Generative AI Prohibited Use Policy](https://policies.google.com/terms/generative-ai/use-policy).
 
 Runs on the Anthropic **Pro subscription** via the Claude Code CLI — no per-token API costs.
 

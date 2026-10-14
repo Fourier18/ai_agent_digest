@@ -438,21 +438,32 @@ guide uploaded as a *source* gets discussed rather than followed; show
 identity must go through the customization textbox (hence the
 show-bible merge into `episode_focus.txt`).
 
-## 11. NotebookLM manual-only: the missing rationale, reconstructed (2026-10-14)
+## 11. NotebookLM and Google's terms: the actual record (checked 2026-09-15)
 
-The operator recalled a specific prior finding: NotebookLM integration had
-been *deliberately* kept manual on a terms-of-service basis, not just because
-no connector existed. That conversation is confirmed lost — a session search
-on 2026-09-15 (same ask, same answer) checked the repo, every memory file,
-all 156 local Claude Code transcripts, and a full scan of Claude Desktop
-chats, and found nothing. The operator concluded it was in a deleted thread.
+A 2026-09-15 session answered this directly, by checking the primary sources
+instead of guessing, and the answer is real and sourced — not a reconstruction:
 
-Re-verified from the current terms rather than memory (2026-10-14): consumer
-NotebookLM has no public API for uploads or generation. A separate Podcast
-API exists but is deprecated and not open to new customers; a Gemini Notebook
-*Enterprise* preview API exists but is a different product this pipeline
-doesn't use. Scripting the consumer UI to upload/generate automatically would
-be automated access to a service built for a human clicking through it by
-hand — the exact thing this pipeline avoided by design, whatever the original
-stated reason was. The README's "no connector exists" line was true but
-incomplete; it now also states the terms-based reason.
+- **Generative AI Additional Terms**: no clause against automation, scripts,
+  or programmatic access.
+- **Main Google Terms of Service**, "Don't abuse our services": restricts
+  automated access that defies machine-readable instructions like robots.txt
+  — narrower than a blanket automation ban.
+- **NotebookLM has no public API.** Automating it would mean driving the
+  consumer web UI with a bot, which is where the abuse clause would start to
+  apply.
+- **This pipeline never does that.** Every NotebookLM step — upload,
+  customize, generate — is a person clicking, every time. No script here
+  ever touches NotebookLM. Compliant by construction, not because it's
+  dodging an explicit prohibition.
+
+Sources: [Generative AI Additional Terms](https://policies.google.com/terms/generative-ai),
+[Google Terms of Service](https://policies.google.com/terms),
+[Generative AI Prohibited Use Policy](https://policies.google.com/terms/generative-ai/use-policy).
+
+That answer is in the same 2026-09-15 session transcript as the operator's
+original question. A 2026-10-14 re-read of that transcript initially missed
+it — focusing instead on a side-quest in the same conversation (the operator
+also asked whether this exact point had been discussed and documented
+*before* that day, which turned up nothing and was wrongly written up here
+as "the discussion was lost"). It wasn't lost. It's answered above, in full,
+with sources, in the conversation where it was asked.
