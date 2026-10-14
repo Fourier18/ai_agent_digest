@@ -7,7 +7,17 @@
 > (`digests` branch, `output/2026-09-26/`) are here for future use.
 > See `HANDOFF.md` for the full record.
 
-A daily research pipeline that produces a curated digest of AI agent news, optimized for both personal reading and feeding into Google NotebookLM for audio-overview generation.
+A daily research pipeline that produces a curated digest of AI agent news, optimized for both personal reading and manual use in Google NotebookLM for audio-overview generation.
+
+**NotebookLM integration is manual by design, not just by omission.** Consumer
+NotebookLM has no public API for uploading sources or triggering generation —
+only a separate, deprecated Podcast API and a Gemini Notebook *Enterprise*
+preview API exist, neither of which this project uses. Scripting around that
+gap (browser automation against the consumer product) would mean automated
+access Google's terms don't extend to a logged-in human using the UI by hand.
+So every NotebookLM step here — upload, customize, generate — is a person
+clicking, every time. Checked against Google's terms 2026-10-14; see `HANDOFF.md`
+for how this was reconstructed after the original design discussion was lost.
 
 Runs on the Anthropic **Pro subscription** via the Claude Code CLI — no per-token API costs.
 

@@ -437,3 +437,22 @@ into PowerShell comments the agent never saw. NotebookLM lesson: a style
 guide uploaded as a *source* gets discussed rather than followed; show
 identity must go through the customization textbox (hence the
 show-bible merge into `episode_focus.txt`).
+
+## 11. NotebookLM manual-only: the missing rationale, reconstructed (2026-10-14)
+
+The operator recalled a specific prior finding: NotebookLM integration had
+been *deliberately* kept manual on a terms-of-service basis, not just because
+no connector existed. That conversation is confirmed lost — a session search
+on 2026-09-15 (same ask, same answer) checked the repo, every memory file,
+all 156 local Claude Code transcripts, and a full scan of Claude Desktop
+chats, and found nothing. The operator concluded it was in a deleted thread.
+
+Re-verified from the current terms rather than memory (2026-10-14): consumer
+NotebookLM has no public API for uploads or generation. A separate Podcast
+API exists but is deprecated and not open to new customers; a Gemini Notebook
+*Enterprise* preview API exists but is a different product this pipeline
+doesn't use. Scripting the consumer UI to upload/generate automatically would
+be automated access to a service built for a human clicking through it by
+hand — the exact thing this pipeline avoided by design, whatever the original
+stated reason was. The README's "no connector exists" line was true but
+incomplete; it now also states the terms-based reason.
